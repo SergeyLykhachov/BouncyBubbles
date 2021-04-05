@@ -33,20 +33,22 @@ public class View extends JPanel implements Observer, MouseMotionListener {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g.create();		
-		for (BubbleModel bm : this.bubbles) {
-			int x = (int) bm.getX();
-			int y = (int) bm.getY();
-			double distance = Math.sqrt(Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2));
-			double scalar = distance <= REACTION_DISTANCE_THRESHOLD ? 1.5 + (1 - distance / REACTION_DISTANCE_THRESHOLD) : 1;
-			int radius = (int) (bm.getRadius() * scalar);
-			g2d.setColor(bm.getColor());
-			g2d.fillOval(
-				x - radius,
-				y - radius,
-				radius * 2,
-				radius * 2
-			);
+		Graphics2D g2d = (Graphics2D) g.create();
+		if (this.bubbles != null) {
+			for (BubbleModel bm : this.bubbles) {
+				int x = (int) bm.getX();
+				int y = (int) bm.getY();
+				double distance = Math.sqrt(Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2));
+				double scalar = distance <= REACTION_DISTANCE_THRESHOLD ? 1.5 + (1 - distance / REACTION_DISTANCE_THRESHOLD) : 1;
+				int radius = (int) (bm.getRadius() * scalar);
+				g2d.setColor(bm.getColor());
+				g2d.fillOval(
+					x - radius,
+					y - radius,
+					radius * 2,
+					radius * 2
+				);
+			}
 		}
 		g2d.dispose();
 	}
